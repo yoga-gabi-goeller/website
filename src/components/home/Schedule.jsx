@@ -1,0 +1,198 @@
+import React, { Component } from 'react';
+import { SectionHeader } from '../styled/Base';
+import { flexCenter, boxShadow, breakpoint, margin } from '../styled/Mixins';
+import { StretchContainer, Container } from '../styled/Layout';
+import styled from 'styled-components';
+import { p, mb } from 'styled-components-spacing';
+
+const ScheduleHeader = styled.div`
+  background: #f6f5f2;
+  font-size: 18px;
+  color: ${props => props.theme.colors.primary};
+  text-align: center;
+  padding: ${props => `${props.theme.spacing[2]} ${props.theme.spacing[1]} ${props.theme.spacing[1]}`};
+  ${mb(1)};
+`;
+
+const Day = styled.div`
+  padding: 0;
+`;
+
+const Cell = styled.div`
+  ${p(2)}
+  ${flexCenter()}
+
+  ${breakpoint('sm')} {
+    height: 50px;
+  }
+
+  ${breakpoint('md')} {
+    height: 100px;
+  }
+
+  ${breakpoint('lg-up')} {
+    height: 130px;
+  }
+`;
+
+const Course = styled(StretchContainer)`
+  ${flexCenter()};
+  background: ${props => props.theme.colors.white};
+
+  ${breakpoint('sm')} {
+    flex-direction: row;
+  }
+
+  ${breakpoint('md-up')} {
+    ${boxShadow()};
+    flex-direction: column;
+  }
+`;
+
+const CourseTitle = styled.h4`
+  color: ${props => props.theme.colors.accent};
+
+  ${breakpoint('sm')} {
+    ${margin(0, 3, 0, 0)};
+  }
+
+  ${breakpoint('lg-up')} {
+    font-size: 18px;
+  }
+`;
+
+const CourseTrainers = styled.div``;
+
+const CourseTrainer = styled.span`
+  color: #929191;
+`;
+
+const TimeColumn = styled.div`
+  ${breakpoint('sm')} {
+    width: 130px;
+    max-width: 130px;
+  }
+`;
+
+const ContentColumn = ({ className, day }) => {
+  const courses = day.courses;
+
+  return (
+    <div className={className}>
+      <ScheduleHeader>{day.name}</ScheduleHeader>
+      {courses.map((course, courseIndex) =>
+        course ? (
+          <Cell key={courseIndex}>
+            <Course>
+              <CourseTitle>{course.title}</CourseTitle>
+              <CourseTrainers className="d-none d-md-block">
+                {course.trainers.map((trainer, trainerIndex) => {
+                  const isLast = trainerIndex === course.trainers.length - 1;
+
+                  return (
+                    <CourseTrainer key={trainerIndex}>
+                      {trainer.name}
+                      {!isLast ? ', ' : ''}
+                    </CourseTrainer>
+                  );
+                })}
+              </CourseTrainers>
+            </Course>
+          </Cell>
+        ) : (
+          <Cell key={courseIndex} />
+        )
+      )}
+    </div>
+  );
+};
+
+export default class Schedule extends Component {
+  createCourse(timeslot, day) {
+    const course = day[timeslot];
+
+    if (course) {
+      return {
+        title: course.title,
+        trainers: day[`${timeslot}_trainers`]
+      };
+    }
+
+    return null;
+  }
+
+  render() {
+    let { schedule } = this.props;
+
+    schedule = schedule.reduce((acc, day) => {
+      acc[day.name] = {
+        name: day.name,
+        courses: ['morning', 'afternoon', 'evening'].map(timeslot => this.createCourse(timeslot, day))
+      };
+      return acc;
+    }, {});
+
+    return (
+      <Container {...this.props} className="container-fluid">
+        <SectionHeader>STUNDENPLAN</SectionHeader>
+        <div className="row p-1 p-md-0">
+          <Day className="col-sm-12 col-md-4 pl-1">
+            <div className="row no-gutters">
+              <TimeColumn className="col col-lg-6">
+                <ScheduleHeader>Zeit</ScheduleHeader>
+                <Cell>09:00 - 10:30</Cell>
+                <Cell>17:30 - 19:00</Cell>
+                <Cell>19:30 - 21:00</Cell>
+              </TimeColumn>
+              <ContentColumn className="col col-lg-6" day={schedule['Montag']} />
+            </div>
+          </Day>
+          <Day className="col-sm-12 col-md-2">
+            <div className="row no-gutters">
+              <TimeColumn className="d-md-none">
+                <ScheduleHeader>Zeit</ScheduleHeader>
+                <Cell>09:00 - 10:30</Cell>
+                <Cell>17:30 - 19:00</Cell>
+                <Cell>19:30 - 21:00</Cell>
+              </TimeColumn>
+              <ContentColumn className="col col-lg-12" day={schedule['Dienstag']} />
+            </div>
+          </Day>
+          <Day className="col-sm-12 col-md-2">
+            <div className="row no-gutters">
+              <TimeColumn className="d-md-none">
+                <ScheduleHeader>Zeit</ScheduleHeader>
+                <Cell>09:00 - 10:30</Cell>
+                <Cell>17:30 - 19:00</Cell>
+                <Cell>19:30 - 21:00</Cell>
+              </TimeColumn>
+              <ContentColumn className="col col-lg-12" day={schedule['Mittwoch']} />
+            </div>
+          </Day>
+          <Day className="col-sm-12 col-md-2">
+            <div className="row no-gutters">
+              <TimeColumn className="d-md-none">
+                <ScheduleHeader>Zeit</ScheduleHeader>
+                <Cell>09:00 - 10:30</Cell>
+                <Cell>17:30 - 19:00</Cell>
+                <Cell>19:30 - 21:00</Cell>
+              </TimeColumn>
+              <ContentColumn className="col col-lg-12" day={schedule['Donnerstag']} />
+            </div>
+          </Day>
+          <Day className="col-sm-12 col-md-2 pr-1">
+            <div className="row no-gutters">
+              <TimeColumn className="d-md-none">
+                <ScheduleHeader>Zeit</ScheduleHeader>
+                <Cell>09:00 - 10:30</Cell>
+                <Cell>17:30 - 19:00</Cell>
+                <Cell>19:30 - 21:00</Cell>
+              </TimeColumn>
+              <ContentColumn className="col col-lg-12" day={schedule['Freitag']} />
+            </div>
+          </Day>
+        </div>
+      </Container>
+    );
+  }
+}
