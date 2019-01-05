@@ -220,7 +220,7 @@ export const query = graphql`
         }
       }
     }
-    allContentfulTrainer {
+    allContentfulTrainer(sort: { fields: [position], order: ASC }) {
       edges {
         node {
           firstname
@@ -244,7 +244,7 @@ export const query = graphql`
         }
       }
     }
-    allContentfulCourse(sort: { fields: [position], order: ASC }) {
+    allContentfulCourse(sort: { fields: [position], order: ASC }, filter: { active: { eq: true } }) {
       edges {
         node {
           title
@@ -287,6 +287,12 @@ export const query = graphql`
             title
           }
           afternoon_trainers {
+            name: firstname
+          }
+          early_evening {
+            title
+          }
+          early_evening_trainers {
             name: firstname
           }
           evening {

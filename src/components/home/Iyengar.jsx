@@ -22,6 +22,11 @@ const IyengarDescriptionText = styled.div`
   width: 90%;
   max-width: 650px;
   font-weight: ${props => props.theme.weights.light};
+
+  strong {
+    display: block;
+    font-weight: 500;
+  }
 `;
 
 export default class Iyengar extends Component {

@@ -19,7 +19,7 @@ export default class ImageSection extends Component {
           <div className="col-sm-12 col-md-4 mt-1 mt-md-0">
             <QuoteWrapper>
               <Quote>
-                Das Leben ist wie Fahrrad fahren. Um die Ballance zu halten, musst du in Bewegung bleiben!
+                Ist der Geist kontrolliert und ruhig, wird die <br /> Seele erkennbar.
                 <QuoteBackgroundPattern right="40" bottom="30" src="images/quotes.svg" />
               </Quote>
             </QuoteWrapper>

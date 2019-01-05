@@ -67,7 +67,7 @@ export default class News extends Component {
           <div className="col-sm-12 col-md-8 mt-1 mt-md-0">
             <QuoteWrapper>
               <Quote>
-                Yoga ist wie ein Apfel. <br /> Er wird mit der Zeit immer reifer <br /> und schmackhafter!
+                Yoga ist der Weg zu <br /> Gesundheit und Harmonie.
                 <QuoteBackgroundPattern src="images/quotes.svg" />
               </Quote>
             </QuoteWrapper>

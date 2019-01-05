@@ -9,6 +9,7 @@ module.exports = {
   plugins: [
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-sass',
+    'gatsby-plugin-styled-components',
     'gatsby-transformer-remark',
     {
       resolve: `gatsby-source-contentful`,
@@ -20,7 +21,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-fonts`,
       options: {
-        fonts: [`Hind:300,400,700`]
+        fonts: [`Hind:300,400,500,700`]
       }
     }
   ]

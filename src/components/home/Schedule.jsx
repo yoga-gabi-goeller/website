@@ -53,7 +53,7 @@ const CourseTitle = styled.h4`
   color: ${props => props.theme.colors.accent};
 
   ${breakpoint('sm')} {
-    ${margin(0, 3, 0, 0)};
+    margin: 0;
   }
 
   ${breakpoint('lg-up')} {
@@ -124,10 +124,12 @@ export default class Schedule extends Component {
   render() {
     let { schedule } = this.props;
 
+    const slots = ['morning', 'afternoon', 'early_evening', 'evening'];
+
     schedule = schedule.reduce((acc, day) => {
       acc[day.name] = {
         name: day.name,
-        courses: ['morning', 'afternoon', 'evening'].map(timeslot => this.createCourse(timeslot, day))
+        courses: slots.map(timeslot => this.createCourse(timeslot, day))
       };
       return acc;
     }, {});
@@ -141,6 +143,7 @@ export default class Schedule extends Component {
               <TimeColumn className="col col-lg-6">
                 <ScheduleHeader>Zeit</ScheduleHeader>
                 <Cell>09:00 - 10:30</Cell>
+                <Cell>15:30 - 17:00</Cell>
                 <Cell>17:30 - 19:00</Cell>
                 <Cell>19:30 - 21:00</Cell>
               </TimeColumn>
@@ -152,6 +155,7 @@ export default class Schedule extends Component {
               <TimeColumn className="d-md-none">
                 <ScheduleHeader>Zeit</ScheduleHeader>
                 <Cell>09:00 - 10:30</Cell>
+                <Cell>15:30 - 17:00</Cell>
                 <Cell>17:30 - 19:00</Cell>
                 <Cell>19:30 - 21:00</Cell>
               </TimeColumn>
@@ -163,6 +167,7 @@ export default class Schedule extends Component {
               <TimeColumn className="d-md-none">
                 <ScheduleHeader>Zeit</ScheduleHeader>
                 <Cell>09:00 - 10:30</Cell>
+                <Cell>15:30 - 17:00</Cell>
                 <Cell>17:30 - 19:00</Cell>
                 <Cell>19:30 - 21:00</Cell>
               </TimeColumn>
@@ -174,6 +179,7 @@ export default class Schedule extends Component {
               <TimeColumn className="d-md-none">
                 <ScheduleHeader>Zeit</ScheduleHeader>
                 <Cell>09:00 - 10:30</Cell>
+                <Cell>15:30 - 17:00</Cell>
                 <Cell>17:30 - 19:00</Cell>
                 <Cell>19:30 - 21:00</Cell>
               </TimeColumn>
@@ -185,6 +191,7 @@ export default class Schedule extends Component {
               <TimeColumn className="d-md-none">
                 <ScheduleHeader>Zeit</ScheduleHeader>
                 <Cell>09:00 - 10:30</Cell>
+                <Cell>15:30 - 17:00</Cell>
                 <Cell>17:30 - 19:00</Cell>
                 <Cell>19:30 - 21:00</Cell>
               </TimeColumn>

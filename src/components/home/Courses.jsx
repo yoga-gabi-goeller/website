@@ -230,10 +230,10 @@ export default class Courses extends Component {
               ) : null}
             </Course>
           ))}
-          <div className="col-sm-12 mt-1 col-md-8 d-none d-md-block">
+          <div className="col-sm-12 mt-1 col-md-4 d-none d-md-block">
             <PlaceholderWrapper direction="column-reverse">
               <Placeholder>
-                <Quote>Wer Yoga übt, entfernt das Unkraut aus dem Körper, sodass der Garten wachsen kann.</Quote>
+                <Quote>Yoga ist ein Spiegel, in dem wir unser Innerstes sehen können.</Quote>
                 <QuoteBackgroundPattern right="80" src="images/quotes.svg" />
               </Placeholder>
             </PlaceholderWrapper>
