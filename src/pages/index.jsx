@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Helmet from 'react-helmet';
 import { Link } from 'react-scroll';
 
+import PageLayout from '../components/PageLayout';
 import Header from '../components/home/Header';
 import News from '../components/home/News';
 import Team from '../components/home/Team';
@@ -131,199 +132,58 @@ export default class HomePage extends Component {
     ];
 
     const { menuOpen } = this.state;
-    const news = this.props.data.allContentfulNews.edges.map(edge => edge.node);
-    const trainers = this.props.data.allContentfulTrainer.edges.map(edge => edge.node);
-
-    const texts = this.props.data.allContentfulText.edges
-      .map(edge => edge.node)
-      .reduce((acc, current) => {
-        const { html } = current.text.childMarkdownRemark;
-        acc[current.slug] = html;
-        return acc;
-      }, {});
-
-    const courses = this.props.data.allContentfulCourse.edges.map(edge => edge.node);
-    const schedule = this.props.data.allContentfulDay.edges.map(edge => edge.node);
-    const prices = this.props.data.allContentfulCard.edges.map(edge => edge.node);
-    const galleries = this.props.data.allContentfulGallery.edges.map(edge => edge.node);
 
     return (
-      <ContentContainer>
-        <Helmet
-          bodyAttributes={{
-            class: menuOpen ? 'menu-open' : ''
-          }}
-        >
-          <script src="https://cdn.polyfill.io/v2/polyfill.min.js" />
-        </Helmet>
-        <Header id="home" />
-        <Toolbar />
-        <MenuButtonContainer>
-          <MenuButton onClick={this.toggleMenu}>
-            <FontAwesomeIcon icon="bars" />
-          </MenuButton>
-        </MenuButtonContainer>
-        <Menu className={menuOpen ? 'open' : ''}>
-          <CloseButton onClick={this.toggleMenu}>
-            <FontAwesomeIcon size="2x" icon={['far', 'times-circle']} />
-          </CloseButton>
-          <MenuItemList>
-            {menu.map((item, index) => (
-              <MenuItem key={index}>
-                <Link
-                  to={item.section}
-                  spy={true}
-                  duration={300}
-                  offset={item.offset}
-                  delay={50}
-                  smooth={true}
-                  onClick={this.toggleMenu}
-                >
-                  {item.text}
-                </Link>
-              </MenuItem>
-            ))}
-          </MenuItemList>
-        </Menu>
-        <News id="news" news={news} />
-        <Team id="team" trainers={trainers} />
-        <Iyengar id="iyengar-yoga" data={texts.iyengar} />
-        <Courses id="courses" courses={courses} />
-        <Schedule id="schedule" schedule={schedule} />
-        <ImageSection mt="9" />
-        <Prices id="prices" prices={prices} />
-        <Gallery id="gallery" gallery={galleries[0]} />
-        <Signup id="signup" />
-        <Footer id="contact" />
-      </ContentContainer>
+      <PageLayout>
+        <ContentContainer>
+          <Helmet
+            bodyAttributes={{
+              class: menuOpen ? 'menu-open' : ''
+            }}
+          >
+            <script src="https://cdn.polyfill.io/v2/polyfill.min.js" />
+          </Helmet>
+          <Header />
+          <Toolbar />
+          <MenuButtonContainer>
+            <MenuButton onClick={this.toggleMenu}>
+              <FontAwesomeIcon icon="bars" />
+            </MenuButton>
+          </MenuButtonContainer>{' '}
+          <Menu className={menuOpen ? 'open' : ''}>
+            <CloseButton onClick={this.toggleMenu}>
+              <FontAwesomeIcon size="2x" icon={['far', 'times-circle']} />
+            </CloseButton>
+            <MenuItemList>
+              {menu.map((item, index) => (
+                <MenuItem key={index}>
+                  <Link
+                    to={item.section}
+                    spy={true}
+                    duration={300}
+                    offset={item.offset}
+                    delay={50}
+                    smooth={true}
+                    onClick={this.toggleMenu}
+                  >
+                    {item.text}
+                  </Link>
+                </MenuItem>
+              ))}
+            </MenuItemList>
+          </Menu>
+          <News />
+          <Team />
+          <Iyengar />
+          <Courses />
+          <Schedule />
+          <ImageSection mt="9" />
+          <Prices />
+          <Gallery />
+          <Signup />
+          <Footer />
+        </ContentContainer>
+      </PageLayout>
     );
   }
 }
-
-export const assetFragment = graphql`
-  fragment assetFields on ContentfulAsset {
-    title
-    file {
-      url
-    }
-  }
-`;
-
-export const query = graphql`
-  query DataQuery {
-    allContentfulNews(sort: { fields: [date], order: DESC }) {
-      edges {
-        node {
-          id
-          body
-          date(formatString: "DD.MM.YYYY")
-        }
-      }
-    }
-    allContentfulTrainer(sort: { fields: [position], order: ASC }) {
-      edges {
-        node {
-          firstname
-          lastname
-          photo {
-            file {
-              url
-            }
-          }
-          level
-        }
-      }
-    }
-    allContentfulCard(sort: { fields: [position], order: ASC }) {
-      edges {
-        node {
-          name
-          validity
-          color
-          price
-        }
-      }
-    }
-    allContentfulCourse(sort: { fields: [position], order: ASC }, filter: { active: { eq: true } }) {
-      edges {
-        node {
-          title
-          image {
-            file {
-              url
-            }
-          }
-          description {
-            childMarkdownRemark {
-              html
-            }
-          }
-        }
-      }
-    }
-    allContentfulText {
-      edges {
-        node {
-          slug
-          text {
-            childMarkdownRemark {
-              html
-            }
-          }
-        }
-      }
-    }
-    allContentfulDay {
-      edges {
-        node {
-          name
-          morning {
-            title
-          }
-          morning_trainers {
-            name: firstname
-          }
-          afternoon {
-            title
-          }
-          afternoon_trainers {
-            name: firstname
-          }
-          early_evening {
-            title
-          }
-          early_evening_trainers {
-            name: firstname
-          }
-          evening {
-            title
-          }
-          evening_trainers {
-            name: firstname
-          }
-        }
-      }
-    }
-    allContentfulGallery(filter: { active: { eq: true } }) {
-      edges {
-        node {
-          image_1 {
-            ...assetFields
-          }
-          image_2 {
-            ...assetFields
-          }
-          image_3 {
-            ...assetFields
-          }
-          image_4 {
-            ...assetFields
-          }
-          image_5 {
-            ...assetFields
-          }
-        }
-      }
-    }
-  }
-`;

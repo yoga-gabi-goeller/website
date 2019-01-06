@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { withPrefix } from 'gatsby-link';
+import { withPrefix } from 'gatsby';
 import { py, px, mx } from 'styled-components-spacing';
 import { margin, flexCenter } from './Mixins';
 import { FlexContainer, StretchContainer } from './Layout';

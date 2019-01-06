@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { StaticQuery, graphql } from 'gatsby';
 import styled from 'styled-components';
 import { PrimaryBackground, Title } from '../styled/Base';
 import { flexCenter } from '../styled/Mixins';
@@ -29,21 +30,45 @@ const IyengarDescriptionText = styled.div`
   }
 `;
 
-export default class Iyengar extends Component {
-  render() {
-    const { data } = this.props;
+export default () => (
+  <StaticQuery
+    query={graphql`
+      query IyengarText {
+        allContentfulText(filter: { slug: { eq: "iyengar" } }) {
+          edges {
+            node {
+              slug
+              text {
+                childMarkdownRemark {
+                  html
+                }
+              }
+            }
+          }
+        }
+      }
+    `}
+    render={data => {
+      const { iyengar } = data.allContentfulText.edges
+        .map(edge => edge.node)
+        .reduce((acc, current) => {
+          const { html } = current.text.childMarkdownRemark;
+          acc[current.slug] = html;
+          return acc;
+        }, {});
 
-    return (
-      <div id={this.props.id} className="container-fluid">
-        <div className="row mt-1 mt-md-2">
-          <div className="col-12">
-            <IyengarDescription>
-              <Title>IYENGAR YOGA</Title>
-              <IyengarDescriptionText dangerouslySetInnerHTML={{ __html: data }} />
-            </IyengarDescription>
+      return (
+        <div id="iyengar-yoga" className="container-fluid">
+          <div className="row mt-1 mt-md-2">
+            <div className="col-12">
+              <IyengarDescription>
+                <Title>IYENGAR YOGA</Title>
+                <IyengarDescriptionText dangerouslySetInnerHTML={{ __html: iyengar }} />
+              </IyengarDescription>
+            </div>
           </div>
         </div>
-      </div>
-    );
-  }
-}
+      );
+    }}
+  />
+);

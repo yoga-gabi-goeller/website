@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { StaticQuery, graphql } from 'gatsby';
 import styled from 'styled-components';
 import { p, py, px, mb } from 'styled-components-spacing';
 import { SectionHeader, AccentBackground } from '../styled/Base';
 import { StretchContainer } from '../styled/Layout';
 import { flexCenter, breakpoint } from '../styled/Mixins';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { extractNodes } from '../../utils';
 
 const CourseInfos = styled(AccentBackground)`
   height: 325px;
@@ -78,41 +80,58 @@ class CourseInfoListItem extends Component {
   }
 }
 
-export default class Prices extends Component {
-  render() {
-    const { prices, ...rest } = this.props;
-    return (
-      <div {...rest} className="container-fluid">
-        <SectionHeader>PREISE</SectionHeader>
-        <div className="row">
-          {prices.map((card, cardIndex) => {
-            const isLast = cardIndex === prices.length - 1;
-            return (
-              <div key={cardIndex} className={`col-md-4 mt-1 ${!isLast ? 'mt-md-0' : 'mt-md-2'}`}>
-                <PriceContainer>
-                  <PriceCard color={card.color}>
-                    <PriceCardHeader>{card.name}</PriceCardHeader>
-                    <PriceHardSubheader>{card.validity}</PriceHardSubheader>
-                    <Price>{card.price}</Price>
-                  </PriceCard>
-                </PriceContainer>
-              </div>
-            );
-          })}
-          <div className="col-md-8 mt-1 mt-md-2">
-            <CourseInfos>
-              <CourseInfoList>
-                <CourseInfoListItem>90 min pro Unterrichtseinheit</CourseInfoListItem>
-                <CourseInfoListItem>Schühlerermäßigung 50%</CourseInfoListItem>
-                <CourseInfoListItem>Einzelunterricht auf Anfrage</CourseInfoListItem>
-                <CourseInfoListItem>Individueller Stundenplan</CourseInfoListItem>
-                <CourseInfoListItem>Krankenkassen anerkannt</CourseInfoListItem>
-                <CourseInfoListItem>Probestunde jederzeit möglich</CourseInfoListItem>
-              </CourseInfoList>
-            </CourseInfos>
+export default () => (
+  <StaticQuery
+    query={graphql`
+      query Prices {
+        allContentfulCard(sort: { fields: [position], order: ASC }) {
+          edges {
+            node {
+              name
+              validity
+              color
+              price
+            }
+          }
+        }
+      }
+    `}
+    render={({ allContentfulCard }) => {
+      const prices = extractNodes(allContentfulCard);
+
+      return (
+        <div id="prices" className="container-fluid">
+          <SectionHeader>PREISE</SectionHeader>
+          <div className="row">
+            {prices.map((card, cardIndex) => {
+              const isLast = cardIndex === prices.length - 1;
+              return (
+                <div key={cardIndex} className={`col-md-4 mt-1 ${!isLast ? 'mt-md-0' : 'mt-md-2'}`}>
+                  <PriceContainer>
+                    <PriceCard color={card.color}>
+                      <PriceCardHeader>{card.name}</PriceCardHeader>
+                      <PriceHardSubheader>{card.validity}</PriceHardSubheader>
+                      <Price>{card.price}</Price>
+                    </PriceCard>
+                  </PriceContainer>
+                </div>
+              );
+            })}
+            <div className="col-md-8 mt-1 mt-md-2">
+              <CourseInfos>
+                <CourseInfoList>
+                  <CourseInfoListItem>90 min pro Unterrichtseinheit</CourseInfoListItem>
+                  <CourseInfoListItem>Schülerermäßigung 50%</CourseInfoListItem>
+                  <CourseInfoListItem>Einzelunterricht auf Anfrage</CourseInfoListItem>
+                  <CourseInfoListItem>Individueller Stundenplan</CourseInfoListItem>
+                  <CourseInfoListItem>Krankenkassen anerkannt</CourseInfoListItem>
+                  <CourseInfoListItem>Probestunde jederzeit möglich</CourseInfoListItem>
+                </CourseInfoList>
+              </CourseInfos>
+            </div>
           </div>
         </div>
-      </div>
-    );
-  }
-}
+      );
+    }}
+  />
+);

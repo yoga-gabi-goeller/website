@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { StaticQuery, graphql } from 'gatsby';
 import styled from 'styled-components';
+
 import { SectionHeader } from '../styled/Base';
 import { breakpoint } from '../styled/Mixins';
 import { p, mt } from 'styled-components-spacing';
@@ -15,7 +17,7 @@ const TrainerName = styled.h3`
   margin: 0;
 `;
 
-const TrainerStatus = TrainerName.withComponent('h4').extend`
+const TrainerStatus = styled(TrainerName.withComponent('h4'))`
   color: #929191;
 `;
 
@@ -27,34 +29,54 @@ const Trainer = styled.div`
   }
 `;
 
-export default class Team extends Component {
-  render() {
-    const { trainers } = this.props;
+export default () => (
+  <StaticQuery
+    query={graphql`
+      query Team {
+        allContentfulTrainer(sort: { fields: [position], order: ASC }) {
+          edges {
+            node {
+              firstname
+              lastname
+              photo {
+                file {
+                  url
+                }
+              }
+              level
+            }
+          }
+        }
+      }
+    `}
+    render={data => {
+      const trainers = data.allContentfulTrainer.edges.map(edge => edge.node);
 
-    return (
-      <div id={this.props.id} className="container-fluid">
-        <SectionHeader>UNSER TEAM</SectionHeader>
-        <div className="row">
-          {trainers.map((trainer, index) => {
-            const fullname = `${trainer.firstname} ${trainer.lastname}`;
-            const image = trainer.photo.file.url;
-            return (
-              <Trainer key={index} className="col-sm-12 col-md-4">
-                <img src={image} alt={`Foto ${fullname}`} />
-                <TrainerDescription>
-                  <TrainerName>{fullname}</TrainerName>
-                  <TrainerStatus>{trainer.level}</TrainerStatus>
-                </TrainerDescription>
-              </Trainer>
-            );
-          })}
-        </div>
-        <div className="row mt-1 mt-md-2">
-          <div className="col-12">
-            <img src="images/iyengar.jpg" alt="" />
+      return (
+        <div id="team" className="container-fluid">
+          <SectionHeader>UNSER TEAM</SectionHeader>
+          <div className="row">
+            {trainers.map((trainer, index) => {
+              const fullname = `${trainer.firstname} ${trainer.lastname}`;
+              const image = trainer.photo.file.url;
+              return (
+                <Trainer key={index} className="col-sm-12 col-md-4">
+                  <img src={image} alt={`Foto ${fullname}`} />
+                  <TrainerDescription>
+                    <TrainerName>{fullname}</TrainerName>
+                    <TrainerStatus>{trainer.level}</TrainerStatus>
+                  </TrainerDescription>
+                </Trainer>
+              );
+            })}
+          </div>
+          <div className="row mt-1 mt-md-2">
+            <div className="col-12">
+              <img src="images/iyengar.jpg" alt="" />
+            </div>
           </div>
         </div>
-      </div>
-    );
-  }
-}
+      );
+    }}
+  />
+);

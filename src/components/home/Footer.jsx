@@ -4,7 +4,7 @@ import { PrimaryButtonInvert, SectionHeader } from '../styled/Base';
 import { breakpoint } from '../styled/Mixins';
 import styled from 'styled-components';
 import { Padding, Margin } from 'styled-components-spacing';
-import Link from 'gatsby-link';
+import { Link } from 'gatsby';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { animateScroll as scroll } from 'react-scroll';
 
@@ -58,7 +58,7 @@ export default class Footer extends Component {
 
   render() {
     return (
-      <div {...this.props} className="container-fluid mt-1 mt-md-2">
+      <div id="contact" className="container-fluid mt-1 mt-md-2">
         <SectionHeader>KONTAKT</SectionHeader>
         <img src="images/map.jpg" alt="Karte" />
         <FooterWrapper>

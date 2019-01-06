@@ -38,7 +38,7 @@ const HeaderContent = styled.div`
 export default class Header extends Component {
   render() {
     return (
-      <HeaderContent id={this.props.id} className="container-fluid">
+      <HeaderContent id="home" className="container-fluid">
         <BackgroundImage height="563" background="images/header.jpg">
           <HeaderLogo>
             <Logo className="mb-3" src="images/logo.svg" alt="Logo" />

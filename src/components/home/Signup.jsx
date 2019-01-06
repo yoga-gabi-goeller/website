@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { ErrorMessage as FormikErrorMessage, Field, Formik } from 'formik';
-import { navigateTo } from 'gatsby-link';
+import { push } from 'gatsby';
 import qs from 'qs';
 import React, { Component } from 'react';
 import styled from 'styled-components';
@@ -79,13 +79,13 @@ export default class Signup extends Component {
       .post('/', qs.stringify(values), {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       })
-      .then(_ => navigateTo('/thank-you'))
+      .then(_ => push('/thank-you'))
       .catch(error => console.error(error));
   }
 
   render() {
     return (
-      <div {...this.props} className="container-fluid mt-1 mt-md-2">
+      <div id="signup" name="signup" className="container-fluid mt-1 mt-md-2">
         <SectionHeader>ANMELDUNG</SectionHeader>
         <div className="row">
           <div className="col-12">
