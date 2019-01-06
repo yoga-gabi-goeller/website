@@ -57,9 +57,9 @@ const PriceHardSubheader = styled.h3`
 const Price = styled.div`
   color: black;
   text-align: center;
-  font-size: 5em;
+  font-size: 4em;
   position: absolute;
-  bottom: 40px;
+  bottom: 50px;
   left: 0;
   right: 0;
 
