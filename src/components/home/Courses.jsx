@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { StaticQuery, graphql } from 'gatsby';
-import { SectionHeader, Title, Quote, QuoteWrapper, QuoteBackgroundPattern, PrimaryButton } from '../styled/Base';
+import {
+  SectionHeader,
+  Title,
+  Quote,
+  QuoteWrapper,
+  QuoteAuthor,
+  QuoteBackgroundPattern,
+  PrimaryButton
+} from '../styled/Base';
 import { flexCenter } from '../styled/Mixins';
 import { mt, p } from 'styled-components-spacing';
 import { StretchContainer, Container } from '../styled/Layout';
@@ -39,6 +47,8 @@ const CloseButton = styled.div`
 `;
 
 const CourseImage = styled.img`
+  object-fit: cover;
+
   ${breakpoint('md')} {
     height: 247px;
   }
@@ -263,8 +273,11 @@ export default class Courses extends Component {
                 <div className="col-sm-12 mt-1 col-md-4 d-none d-md-block">
                   <PlaceholderWrapper direction="column-reverse">
                     <Placeholder>
-                      <Quote>Yoga ist ein Spiegel, in dem wir unser Innerstes sehen können.</Quote>
-                      <QuoteBackgroundPattern right="80" src="images/quotes.svg" />
+                      <Quote>
+                        Yoga ist ein Spiegel, in dem wir unser Innerstes sehen können.
+                        <QuoteAuthor>B.K.S. Iyengar</QuoteAuthor>
+                        <QuoteBackgroundPattern right="80" src="images/quotes.svg" />
+                      </Quote>
                     </Placeholder>
                   </PlaceholderWrapper>
                 </div>

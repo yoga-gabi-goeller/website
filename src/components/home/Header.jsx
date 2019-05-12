@@ -31,9 +31,7 @@ export const HeaderLogoText = styled.div`
   }
 `;
 
-const HeaderContent = styled.div`
-  margin-bottom: -50px;
-`;
+const HeaderContent = styled.div``;
 
 export default class Header extends Component {
   render() {

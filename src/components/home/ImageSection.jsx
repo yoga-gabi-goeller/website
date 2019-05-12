@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FullWidthImage, Quote, QuoteWrapper, QuoteBackgroundPattern } from '../styled/Base';
+import { FullWidthImage, Quote, QuoteWrapper, QuoteAuthor, QuoteBackgroundPattern } from '../styled/Base';
 import { Margin } from 'styled-components-spacing';
 
 export default class ImageSection extends Component {
@@ -13,13 +13,16 @@ export default class ImageSection extends Component {
         className="container-fluid"
       >
         <div className="row">
-          <div className="col-sm-12 col-md-8">
+          <div className="col-sm-12 col-md-6">
             <FullWidthImage src="images/image_1.jpg" alt="" />
           </div>
-          <div className="col-sm-12 col-md-4 mt-1 mt-md-0">
+          <div className="col-sm-12 col-md-6 mt-1 mt-md-0">
             <QuoteWrapper>
               <Quote>
-                Ist der Geist kontrolliert und ruhig, wird die <br /> Seele erkennbar.
+                Wunschlos die Sinne, <br />
+                die Strömungen der Gedanken und Gefühle angehalten, <br />
+                das Herz voll Frieden, <br /> dies ist der allerhöchste Stand, Yoga wird er genannt.
+                <QuoteAuthor>Kata-Upanishad</QuoteAuthor>
                 <QuoteBackgroundPattern right="40" bottom="30" src="images/quotes.svg" />
               </Quote>
             </QuoteWrapper>

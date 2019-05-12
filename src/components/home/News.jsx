@@ -1,6 +1,6 @@
 import React from 'react';
 import { StaticQuery, graphql } from 'gatsby';
-import { Title, Quote, QuoteWrapper, QuoteBackgroundPattern } from '../styled/Base';
+import { Title, Quote, QuoteWrapper, QuoteAuthor, QuoteBackgroundPattern } from '../styled/Base';
 import { FlexContainer, StretchContainer } from '../styled/Layout';
 import styled from 'styled-components';
 import { Margin } from 'styled-components-spacing';
@@ -80,6 +80,7 @@ export default () => (
               <QuoteWrapper>
                 <Quote>
                   Durch Üben und die Fähigkeit loszulassen kann unser Geist den Zustand von Yoga erreichen.
+                  <QuoteAuthor>Patanjali Sutra</QuoteAuthor>
                   <QuoteBackgroundPattern src="images/quotes.svg" />
                 </Quote>
               </QuoteWrapper>

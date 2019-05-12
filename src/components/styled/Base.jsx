@@ -59,6 +59,16 @@ export const QuoteBackgroundPattern = styled.img`
   }
 `;
 
+export const QuoteAuthor = styled.div`
+  font-size: 14px;
+  text-transform: uppercase;
+
+  &:before {
+    content: '\u2014';
+    margin-right: 10px;
+  }
+`;
+
 export const Title = styled.h1`
   font-size: 30px;
   line-height: 30px;
