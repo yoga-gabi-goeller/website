@@ -51,6 +51,10 @@ const BackToTop = styled.div`
   }
 `;
 
+const Map = styled.iframe`
+  border: 0;
+`;
+
 export default class Footer extends Component {
   scrollToTop() {
     scroll.scrollToTop({ duration: 400 });
@@ -60,7 +64,7 @@ export default class Footer extends Component {
     return (
       <div id="contact" className="container-fluid mt-1 mt-md-2">
         <SectionHeader>KONTAKT</SectionHeader>
-        <img src="images/map.jpg" alt="Karte" />
+        <Map src="https://snazzymaps.com/embed/117724" width="100%" height="500px" />
         <FooterWrapper>
           <BackToTop>
             <PrimaryButtonInvert onClick={this.scrollToTop}>
