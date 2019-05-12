@@ -20,8 +20,8 @@ export default class ImageSection extends Component {
             <QuoteWrapper>
               <Quote>
                 Wunschlos die Sinne, <br />
-                die Strömungen der Gedanken und Gefühle angehalten, <br />
-                das Herz voll Frieden, <br /> dies ist der allerhöchste Stand, Yoga wird er genannt.
+                die Strömungen der Gedanken <br /> und Gefühle angehalten, <br />
+                das Herz voll Frieden, <br /> dies ist der allerhöchste Stand, <br /> Yoga wird er genannt.
                 <QuoteAuthor>Kata-Upanishad</QuoteAuthor>
                 <QuoteBackgroundPattern right="40" bottom="30" src="images/quotes.svg" />
               </Quote>
