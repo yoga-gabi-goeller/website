@@ -14,6 +14,7 @@ import Prices from '../components/home/Prices';
 import Gallery from '../components/home/Gallery';
 import Signup from '../components/home/Signup';
 import Footer from '../components/home/Footer';
+import Downloads from '../components/home/Downloads';
 import ImageSection from '../components/home/ImageSection';
 
 import { ContentContainer, FixedContainer } from '../components/styled/Layout';
@@ -128,6 +129,7 @@ export default class HomePage extends Component {
       { text: 'PREISE', section: 'prices' },
       { text: 'GALERIE', section: 'gallery' },
       { text: 'ANMELDUNG', section: 'signup' },
+      { text: 'DOWNLOADS', section: 'downloads' },
       { text: 'KONTAKT', section: 'contact' }
     ];
 
@@ -181,6 +183,7 @@ export default class HomePage extends Component {
           <Prices />
           <Gallery />
           <Signup />
+          <Downloads />
           <Footer />
         </ContentContainer>
       </PageLayout>
