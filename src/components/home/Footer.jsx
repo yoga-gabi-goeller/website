@@ -83,7 +83,7 @@ export default class Footer extends Component {
                 </CompanyInformation>
                 <CompanyInformation>
                   Email: <br />
-                  info@gabigoeller.de
+                  gabi@goeller.yoga
                 </CompanyInformation>
                 <CompanyInformation>
                   Bürozeiten: <br />
