@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { SectionHeader } from '../styled/Base';
+import { SectionHeader, PrimaryButton } from '../styled/Base';
 import { flexCenter, boxShadow, breakpoint } from '../styled/Mixins';
 import { StretchContainer, Container } from '../styled/Layout';
 import styled from 'styled-components';
-import { p, mb } from 'styled-components-spacing';
+import { p, mb, Margin } from 'styled-components-spacing';
 import { StaticQuery, graphql } from 'gatsby';
 import { extractNodes } from '../../utils';
+import Scroll from 'react-scroll';
+
+const scroll = Scroll.scroller;
 
 const ScheduleHeader = styled.div`
   background: #f6f5f2;
@@ -109,6 +112,11 @@ const ContentColumn = ({ className, day }) => {
   );
 };
 
+const ActionButtons = styled.div`
+  margin: 50px 0;
+  ${flexCenter()};
+`;
+
 export default class Schedule extends Component {
   createCourse(timeslot, day) {
     const course = day[timeslot];
@@ -122,6 +130,13 @@ export default class Schedule extends Component {
 
     return null;
   }
+
+  scrollToSection = section => {
+    scroll.scrollTo(section, {
+      duration: 300,
+      smooth: true
+    });
+  };
 
   render() {
     return (
@@ -237,6 +252,9 @@ export default class Schedule extends Component {
                   </div>
                 </Day>
               </div>
+              <ActionButtons>
+                <PrimaryButton onClick={() => this.scrollToSection('signup')}>ZUR ANMELDUNG</PrimaryButton>
+              </ActionButtons>
             </Container>
           );
         }}
