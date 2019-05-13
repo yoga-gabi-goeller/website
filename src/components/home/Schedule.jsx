@@ -3,7 +3,7 @@ import { SectionHeader, PrimaryButton } from '../styled/Base';
 import { flexCenter, boxShadow, breakpoint } from '../styled/Mixins';
 import { StretchContainer, Container } from '../styled/Layout';
 import styled from 'styled-components';
-import { p, mb, Margin } from 'styled-components-spacing';
+import { p, mb } from 'styled-components-spacing';
 import { StaticQuery, graphql } from 'gatsby';
 import { extractNodes } from '../../utils';
 import Scroll from 'react-scroll';
@@ -117,7 +117,42 @@ const ActionButtons = styled.div`
   ${flexCenter()};
 `;
 
+const FilterItem = styled.li`
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+
+  &.active {
+    border-bottom: 2px solid ${props => props.theme.colors.primary};
+  }
+`;
+
+const Filters = styled.ul`
+  list-style: none;
+  padding: 0;
+  ${flexCenter()};
+  margin: 30px 0 50px;
+
+  ${FilterItem} + ${FilterItem} {
+    margin-left: 20px;
+  }
+`;
+
+const filterDay = (day, filter) => {
+  const filteredCourses = day.courses.map(course => {
+    return course && (filter === 'Alle' || course.title === filter) ? course : null;
+  });
+
+  return {
+    ...day,
+    courses: filteredCourses
+  };
+};
+
 export default class Schedule extends Component {
+  state = {
+    selectedFilter: 0
+  };
+
   createCourse(timeslot, day) {
     const course = day[timeslot];
 
@@ -138,11 +173,24 @@ export default class Schedule extends Component {
     });
   };
 
+  selectFilter = index => {
+    this.setState({
+      selectedFilter: index
+    });
+  };
+
   render() {
     return (
       <StaticQuery
         query={graphql`
           query Schedule {
+            allContentfulCourse(sort: { fields: [position], order: ASC }, filter: { active: { eq: true } }) {
+              edges {
+                node {
+                  title
+                }
+              }
+            }
             allContentfulDay {
               edges {
                 node {
@@ -176,8 +224,12 @@ export default class Schedule extends Component {
             }
           }
         `}
-        render={({ allContentfulDay }) => {
+        render={({ allContentfulDay, allContentfulCourse }) => {
           const slots = ['morning', 'afternoon', 'early_evening', 'evening'];
+          const filters = ['Alle'].concat(extractNodes(allContentfulCourse).map(course => course.title));
+
+          const { selectedFilter } = this.state;
+          const filter = filters[selectedFilter];
 
           const schedule = extractNodes(allContentfulDay).reduce((acc, day) => {
             acc[day.name] = {
@@ -187,9 +239,27 @@ export default class Schedule extends Component {
             return acc;
           }, {});
 
+          const filteredSchedule = Object.keys(schedule).reduce((filteredSchedule, day) => {
+            filteredSchedule[day] = filterDay(schedule[day], filter);
+            return filteredSchedule;
+          }, {});
+
           return (
             <Container id="schedule" className="container-fluid">
               <SectionHeader>STUNDENPLAN</SectionHeader>
+
+              <Filters>
+                {filters.map((course, index) => (
+                  <FilterItem
+                    onClick={() => this.selectFilter(index)}
+                    className={selectedFilter === index ? 'active' : ''}
+                    key={index}
+                  >
+                    {course}
+                  </FilterItem>
+                ))}
+              </Filters>
+
               <div className="row p-1 p-md-0">
                 <Day className="col-sm-12 col-md-4 pl-1">
                   <div className="row no-gutters">
@@ -200,7 +270,7 @@ export default class Schedule extends Component {
                       <Cell>17:30 - 19:00</Cell>
                       <Cell>19:30 - 21:00</Cell>
                     </TimeColumn>
-                    <ContentColumn className="col col-lg-6" day={schedule['Montag']} />
+                    <ContentColumn className="col col-lg-6" day={filteredSchedule['Montag']} />
                   </div>
                 </Day>
                 <Day className="col-sm-12 col-md-2">
@@ -212,7 +282,7 @@ export default class Schedule extends Component {
                       <Cell>17:30 - 19:00</Cell>
                       <Cell>19:30 - 21:00</Cell>
                     </TimeColumn>
-                    <ContentColumn className="col col-lg-12" day={schedule['Dienstag']} />
+                    <ContentColumn className="col col-lg-12" day={filteredSchedule['Dienstag']} />
                   </div>
                 </Day>
                 <Day className="col-sm-12 col-md-2">
@@ -224,7 +294,7 @@ export default class Schedule extends Component {
                       <Cell>17:30 - 19:00</Cell>
                       <Cell>19:30 - 21:00</Cell>
                     </TimeColumn>
-                    <ContentColumn className="col col-lg-12" day={schedule['Mittwoch']} />
+                    <ContentColumn className="col col-lg-12" day={filteredSchedule['Mittwoch']} />
                   </div>
                 </Day>
                 <Day className="col-sm-12 col-md-2">
@@ -236,7 +306,7 @@ export default class Schedule extends Component {
                       <Cell>17:30 - 19:00</Cell>
                       <Cell>19:30 - 21:00</Cell>
                     </TimeColumn>
-                    <ContentColumn className="col col-lg-12" day={schedule['Donnerstag']} />
+                    <ContentColumn className="col col-lg-12" day={filteredSchedule['Donnerstag']} />
                   </div>
                 </Day>
                 <Day className="col-sm-12 col-md-2 pr-1">
@@ -248,7 +318,7 @@ export default class Schedule extends Component {
                       <Cell>17:30 - 19:00</Cell>
                       <Cell>19:30 - 21:00</Cell>
                     </TimeColumn>
-                    <ContentColumn className="col col-lg-12" day={schedule['Freitag']} />
+                    <ContentColumn className="col col-lg-12" day={filteredSchedule['Freitag']} />
                   </div>
                 </Day>
               </div>
