@@ -73,7 +73,7 @@ export default () => (
                 </Trainer>
               );
             })}
-            <div className="d-sm-none d-md-block col-8 mt-2">
+            <div className="d-none d-md-block col-8 mt-2">
               <QuoteWrapper>
                 <Quote>
                   Durch Üben und die Fähigkeit loszulassen kann unser Geist den Zustand von Yoga erreichen.
