@@ -2,7 +2,7 @@ import React from 'react';
 import { StaticQuery, graphql } from 'gatsby';
 import styled from 'styled-components';
 
-import { SectionHeader } from '../styled/Base';
+import { SectionHeader, Quote, QuoteWrapper, QuoteAuthor, QuoteBackgroundPattern } from '../styled/Base';
 import { breakpoint } from '../styled/Mixins';
 import { p, mt } from 'styled-components-spacing';
 
@@ -22,6 +22,10 @@ const TrainerStatus = styled(TrainerName.withComponent('h4'))`
 `;
 
 const Trainer = styled.div`
+  ${breakpoint('md-up')} {
+    ${mt(2)};
+  }
+
   ${breakpoint('sm')} {
     & + & {
       ${mt(1)};
@@ -69,6 +73,15 @@ export default () => (
                 </Trainer>
               );
             })}
+            <div className="d-sm-none d-md-block col-8 mt-2">
+              <QuoteWrapper>
+                <Quote>
+                  Durch Üben und die Fähigkeit loszulassen kann unser Geist den Zustand von Yoga erreichen.
+                  <QuoteAuthor>Patanjali Sutra</QuoteAuthor>
+                  <QuoteBackgroundPattern src="images/quotes.svg" />
+                </Quote>
+              </QuoteWrapper>
+            </div>
           </div>
           <div className="row mt-1 mt-md-2">
             <div className="col-12">

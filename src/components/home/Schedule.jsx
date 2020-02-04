@@ -3,7 +3,7 @@ import { SectionHeader, PrimaryButton } from '../styled/Base';
 import { flexCenter, boxShadow, breakpoint } from '../styled/Mixins';
 import { StretchContainer, Container } from '../styled/Layout';
 import styled from 'styled-components';
-import { p, mb } from 'styled-components-spacing';
+import { p, mb, mt } from 'styled-components-spacing';
 import { StaticQuery, graphql } from 'gatsby';
 import { extractNodes } from '../../utils';
 import Scroll from 'react-scroll';
@@ -120,6 +120,7 @@ const ActionButtons = styled.div`
 const FilterItem = styled.li`
   cursor: pointer;
   border-bottom: 2px solid transparent;
+  ${mt(2)};
 
   &.active {
     border-bottom: 2px solid ${props => props.theme.colors.primary};
@@ -130,7 +131,8 @@ const Filters = styled.ul`
   list-style: none;
   padding: 0;
   ${flexCenter()};
-  margin: 30px 0 50px;
+  margin: calc(30px - 0.5rem) 10px 50px;
+  flex-wrap: wrap;
 
   ${FilterItem} + ${FilterItem} {
     margin-left: 20px;

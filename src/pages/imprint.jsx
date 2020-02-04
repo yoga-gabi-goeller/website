@@ -20,7 +20,7 @@ export default class Imprint extends Component {
               <p>
                 Gabi Göller
                 <br />
-                Am Stadtholz 10
+                Mönchstraße 17a
                 <br />
                 33378 Rheda-Wiedenbrück
                 <br />
