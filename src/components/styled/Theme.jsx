@@ -66,6 +66,7 @@ const colors = {
   primaryHover: '#bf2121',
   accent: '#DD9071',
   accentContrast: '#FFF',
+  border: '#e6e6e6',
   gray: '#f6f5f2',
   error: '#F44336',
   white: 'rgba(255, 255, 255, 1)',

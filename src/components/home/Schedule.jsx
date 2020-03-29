@@ -1,12 +1,12 @@
+import { graphql, StaticQuery } from 'gatsby';
 import React, { Component } from 'react';
-import { SectionHeader, PrimaryButton } from '../styled/Base';
-import { flexCenter, boxShadow, breakpoint } from '../styled/Mixins';
-import { StretchContainer, Container } from '../styled/Layout';
-import styled from 'styled-components';
-import { p, mb, mt } from 'styled-components-spacing';
-import { StaticQuery, graphql } from 'gatsby';
-import { extractNodes } from '../../utils';
 import Scroll from 'react-scroll';
+import styled from 'styled-components';
+import { mb, mt, ml, mr, p } from 'styled-components-spacing';
+import { extractNodes } from '../../utils';
+import { PrimaryButton, SectionHeader } from '../styled/Base';
+import { Container, StretchContainer } from '../styled/Layout';
+import { breakpoint, flexCenter } from '../styled/Mixins';
 
 const scroll = Scroll.scroller;
 
@@ -40,22 +40,36 @@ const Cell = styled.div`
   }
 `;
 
+export const closed = () => {
+  return `&.closed`;
+};
+
 const Course = styled(StretchContainer)`
   ${flexCenter()};
   background: ${props => props.theme.colors.white};
+
+  ${closed()} {
+    opacity: 0.8;
+  }
 
   ${breakpoint('sm')} {
     flex-direction: row;
   }
 
   ${breakpoint('md-up')} {
-    ${boxShadow()};
+    border: 1px solid ${props => props.theme.colors.border};
     flex-direction: column;
   }
 `;
 
 const CourseTitle = styled.h4`
   color: ${props => props.theme.colors.accent};
+  margin-bottom: 0;
+  line-height: 1.2;
+
+  ${closed()} {
+    opacity: 0.4;
+  }
 
   ${breakpoint('sm')} {
     margin: 0;
@@ -79,35 +93,81 @@ const TimeColumn = styled.div`
   }
 `;
 
+const OnlineBadge = styled.div`
+  background: ${props => props.theme.colors.accent};
+  color: white;
+  border-radius: 4px;
+  padding: 3px 6px 1px;
+  font-size: 12px;
+  line-height: 1;
+  margin: 0;
+
+  ${breakpoint('sm')} {
+    padding: 3px 6px 2px;
+    ${mr(2)}
+    ${mb(1)}
+  }
+
+  ${breakpoint('md-up')} {
+    ${mb(2)}
+  }
+`;
+
+const Closed = styled.h5`
+  margin: 0;
+  font-weight: 500;
+  font-size: 14px;
+  color: #929191;
+
+  ${breakpoint('sm')} {
+    ${ml(2)}
+  }
+
+  ${breakpoint('md-up')} {
+    ${mt(1)}
+  }
+`;
+
 const ContentColumn = ({ className, day }) => {
   const courses = day.courses;
 
   return (
     <div className={className} name="schedule">
       <ScheduleHeader>{day.name}</ScheduleHeader>
-      {courses.map((course, courseIndex) =>
-        course ? (
-          <Cell key={courseIndex}>
-            <Course>
-              <CourseTitle>{course.title}</CourseTitle>
-              <CourseTrainers className="d-none d-md-block">
-                {course.trainers.map((trainer, trainerIndex) => {
-                  const isLast = trainerIndex === course.trainers.length - 1;
+      {courses.map((course, courseIndex) => {
+        if (course) {
+          const closed = course.closed;
+          const online = course.online;
+          const classes = closed ? 'closed' : '';
 
-                  return (
-                    <CourseTrainer key={trainerIndex}>
-                      {trainer.name}
-                      {!isLast ? ', ' : ''}
-                    </CourseTrainer>
-                  );
-                })}
-              </CourseTrainers>
-            </Course>
-          </Cell>
-        ) : (
-          <Cell key={courseIndex} />
-        )
-      )}
+          return (
+            <Cell key={courseIndex}>
+              <Course className={classes}>
+                {online ? <OnlineBadge>online</OnlineBadge> : null}
+                <CourseTitle className={classes}>{course.title}</CourseTitle>
+                {closed ? (
+                  <Closed>GESCHLOSSEN</Closed>
+                ) : (
+                  <CourseTrainers className="d-none d-md-block">
+                    {course.trainers.map((trainer, trainerIndex) => {
+                      const isLast = trainerIndex === course.trainers.length - 1;
+
+                      return (
+                        <CourseTrainer key={trainerIndex}>
+                          {trainer.name}
+                          {!isLast ? ', ' : ''}
+                        </CourseTrainer>
+                      );
+                    })}
+                  </CourseTrainers>
+                )}
+              </Course>
+            </Cell>
+          );
+        }
+
+        return <Cell key={courseIndex} />;
+      })}
     </div>
   );
 };
@@ -161,7 +221,9 @@ export default class Schedule extends Component {
     if (course) {
       return {
         title: course.title,
-        trainers: day[`${timeslot}_trainers`]
+        trainers: day[`${timeslot}_trainers`],
+        online: day[`${timeslot}_online`],
+        closed: day[`${timeslot}_closed`]
       };
     }
 
@@ -200,24 +262,32 @@ export default class Schedule extends Component {
                   morning {
                     title
                   }
+                  morning_online
+                  morning_closed
                   morning_trainers {
                     name: firstname
                   }
                   afternoon {
                     title
                   }
+                  afternoon_online
+                  afternoon_closed
                   afternoon_trainers {
                     name: firstname
                   }
                   early_evening {
                     title
                   }
+                  early_evening_online
+                  early_evening_closed
                   early_evening_trainers {
                     name: firstname
                   }
                   evening {
                     title
                   }
+                  evening_online
+                  evening_closed
                   evening_trainers {
                     name: firstname
                   }
@@ -249,7 +319,6 @@ export default class Schedule extends Component {
           return (
             <Container id="schedule" className="container-fluid">
               <SectionHeader>STUNDENPLAN</SectionHeader>
-
               <Filters>
                 {filters.map((course, index) => (
                   <FilterItem
@@ -261,7 +330,6 @@ export default class Schedule extends Component {
                   </FilterItem>
                 ))}
               </Filters>
-
               <div className="row p-1 p-md-0">
                 <Day className="col-sm-12 col-md-4 pl-1">
                   <div className="row no-gutters">

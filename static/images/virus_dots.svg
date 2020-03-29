@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="45px" height="41px" viewBox="0 0 45 41" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>virus-dots</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Website" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.06">
+        <g id="Artboard" transform="translate(-458.000000, -987.000000)" fill="#FFFFFF">
+            <g id="header-copy-9" transform="translate(412.000000, 573.000000)">
+                <g id="virus-dots" transform="translate(46.000000, 414.000000)">
+                    <path d="M39,29 C42.3137873,29 45,31.6861656 45,34.9998949 C45,38.313414 42.3137873,41 39,41 C35.6862127,41 33,38.313414 33,34.9998949 C33,31.6861656 35.6862127,29 39,29" id="Fill-12-Copy"></path>
+                    <path d="M15,0 C23.2844683,0 30,6.71541412 30,14.9997373 C30,23.283535 23.2844683,30 15,30 C6.71553174,30 0,23.283535 0,14.9997373 C0,6.71541412 6.71553174,0 15,0" id="Fill-12"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
