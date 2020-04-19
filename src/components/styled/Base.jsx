@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { withPrefix } from 'gatsby';
-import { py, px, mx } from 'styled-components-spacing';
-import { margin, flexCenter } from './Mixins';
+import { py, px, mx, p } from 'styled-components-spacing';
+import { margin, flexCenter, breakpoint } from './Mixins';
 import { FlexContainer, StretchContainer } from './Layout';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 
 export const PrimaryBackground = styled.div`
   background: ${props => props.theme.colors.primary};
@@ -26,6 +27,53 @@ export const BackgroundImage = styled.div`
   height: ${props => (!!props.height ? props.height + 'px' : 100 + '%')};
   width: 100%;
 `;
+
+const CheckmarkListWrapper = styled(AccentBackground)`
+  height: ${({ height = '325px' }) => height};
+  color: ${props => props.theme.colors.white};
+  ${flexCenter()};
+  ${p(4)};
+`;
+
+const CheckmarkList = styled.ul`
+  font-size: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  ${breakpoint('sm')} {
+    font-size: 20px;
+    ${p(1)};
+  }
+`;
+
+export const Checkmarks = ({ height, children }) => {
+  return (
+    <CheckmarkListWrapper height={height}>
+      <CheckmarkList>{children}</CheckmarkList>
+    </CheckmarkListWrapper>
+  );
+};
+
+const CheckmarkListItemBase = styled.li`
+  display: flex;
+  align-items: baseline;
+  lineheight: 1.8em;
+  fontweight: 300;
+`;
+
+export class CheckmarkItem extends Component {
+  render() {
+    return (
+      <CheckmarkListItemBase>
+        <div>
+          <FontAwesomeIcon className="mr-3" icon="check" size="sm" />
+        </div>
+        <div>{this.props.children}</div>
+      </CheckmarkListItemBase>
+    );
+  }
+}
 
 export const Quote = styled.span`
   padding: ${props => props.theme.spacing[5]};

@@ -1,6 +1,7 @@
 import React from 'react';
 import { StaticQuery, graphql } from 'gatsby';
 import styled from 'styled-components';
+import { Checkmarks, CheckmarkItem } from '../styled/Base';
 
 import { SectionHeader, Quote, QuoteWrapper, QuoteAuthor, QuoteBackgroundPattern } from '../styled/Base';
 import { breakpoint } from '../styled/Mixins';
@@ -74,13 +75,15 @@ export default () => (
               );
             })}
             <div className="d-none d-md-block col-8 mt-2">
-              <QuoteWrapper>
-                <Quote>
-                  Durch Üben und die Fähigkeit loszulassen kann unser Geist den Zustand von Yoga erreichen.
-                  <QuoteAuthor>Patanjali Sutra</QuoteAuthor>
-                  <QuoteBackgroundPattern src="images/quotes.svg" />
-                </Quote>
-              </QuoteWrapper>
+              <Checkmarks height="100%">
+                <CheckmarkItem>Zertifiziert durch Iyengar-Yoga-Deutschland</CheckmarkItem>
+                <CheckmarkItem>Kontinuierliche Weiterbildung</CheckmarkItem>
+                <CheckmarkItem>
+                  Weiterbildung im Iyengar-Yoga-Institut <br />
+                  BKS Iyengar Pune in Indien
+                </CheckmarkItem>
+                <CheckmarkItem>Leben und Lieben Yoga</CheckmarkItem>
+              </Checkmarks>
             </div>
           </div>
           <div className="row mt-1 mt-md-2">

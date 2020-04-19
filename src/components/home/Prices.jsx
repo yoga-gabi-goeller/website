@@ -1,30 +1,10 @@
-import React, { Component } from 'react';
-import { StaticQuery, graphql } from 'gatsby';
+import { graphql, StaticQuery } from 'gatsby';
+import React from 'react';
 import styled from 'styled-components';
-import { p, py, px, mb } from 'styled-components-spacing';
-import { SectionHeader, AccentBackground } from '../styled/Base';
-import { StretchContainer } from '../styled/Layout';
-import { flexCenter, breakpoint } from '../styled/Mixins';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { mb, px, py } from 'styled-components-spacing';
 import { extractNodes } from '../../utils';
-
-const CourseInfos = styled(AccentBackground)`
-  height: 325px;
-  color: ${props => props.theme.colors.white};
-  ${flexCenter()};
-`;
-
-const CourseInfoList = styled.ul`
-  font-size: 24px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-
-  ${breakpoint('sm')} {
-    font-size: 20px;
-    ${p(1)};
-  }
-`;
+import { SectionHeader, Checkmarks, CheckmarkItem } from '../styled/Base';
+import { StretchContainer } from '../styled/Layout';
 
 const PriceContainer = styled.div`
   height: 325px;
@@ -69,17 +49,6 @@ const Price = styled.div`
   }
 `;
 
-class CourseInfoListItem extends Component {
-  render() {
-    return (
-      <li style={{ lineHeight: '1.8em', fontWeight: 300 }}>
-        <FontAwesomeIcon className="mr-3" icon="check" size="sm" />
-        {this.props.children}
-      </li>
-    );
-  }
-}
-
 export default () => (
   <StaticQuery
     query={graphql`
@@ -118,16 +87,14 @@ export default () => (
               );
             })}
             <div className="col-md-8 mt-1 mt-md-2">
-              <CourseInfos>
-                <CourseInfoList>
-                  <CourseInfoListItem>90 min pro Unterrichtseinheit</CourseInfoListItem>
-                  <CourseInfoListItem>Schülerermäßigung 50%</CourseInfoListItem>
-                  <CourseInfoListItem>Einzelunterricht auf Anfrage</CourseInfoListItem>
-                  <CourseInfoListItem>Individueller Stundenplan</CourseInfoListItem>
-                  <CourseInfoListItem>Krankenkassen anerkannt</CourseInfoListItem>
-                  <CourseInfoListItem>Probestunde jederzeit möglich</CourseInfoListItem>
-                </CourseInfoList>
-              </CourseInfos>
+              <Checkmarks>
+                <CheckmarkItem>90 min pro Unterrichtseinheit</CheckmarkItem>
+                <CheckmarkItem>Schülerermäßigung 50%</CheckmarkItem>
+                <CheckmarkItem>Einzelunterricht auf Anfrage</CheckmarkItem>
+                <CheckmarkItem>Individueller Stundenplan</CheckmarkItem>
+                <CheckmarkItem>Krankenkassen anerkannt</CheckmarkItem>
+                <CheckmarkItem>Probestunde jederzeit möglich</CheckmarkItem>
+              </Checkmarks>
             </div>
           </div>
         </div>

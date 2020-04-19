@@ -37,6 +37,11 @@ const NewsItem = ({ data }) => (
   </NewsItemContainer>
 );
 
+const ImageCover = styled.img`
+  object-fit: cover;
+  object-position: left;
+`;
+
 export default () => (
   <StaticQuery
     query={graphql`
@@ -67,8 +72,8 @@ export default () => (
               </NewsContentWrapper>
             </div>
             <div className="col-lg-6 d-none d-lg-block d-xl-block">
-              <Margin top={{ md: '1', lg: '0' }}>
-                <img src="images/news_1.jpg" alt="" />
+              <Margin style={{ display: 'flex', height: '100%' }} top={{ md: '1', lg: '0' }}>
+                <ImageCover src="images/news_1.jpg" alt="" />
               </Margin>
             </div>
           </div>
