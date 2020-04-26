@@ -38,10 +38,6 @@ export default () => (
       Kursbeginn, mit Datum und Uhrzeit des Kurses, Deine gewünschte Teilnahme mit.
       <br />
       <br />
-      Wir berechnen derzeit für Schüler mit 5er, 10er oder 20er-Karte den halben Preis pro Online-Stunde. Für
-      Einzelbuchungen 10 € pro Online-Stunde.
-      <br />
-      <br />
       Wir freuen uns auf Euch!
       <br />
       Gabi, Thomas, Christiane und Markus
