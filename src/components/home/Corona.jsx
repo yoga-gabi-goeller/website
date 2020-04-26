@@ -25,9 +25,9 @@ export default () => (
     <div>
       <strong>Wir sind weiterhin online für Euch da!</strong>
       <br />
-      Da der Unterricht in unserem Yoga-Studio mindestens bis zum 02.05.2020 leider nicht möglich ist, sind wir aktuell
-      mit einem Online-Kursangebot für Euch da. Wir folgen somit den Empfehlungen unserer Bundesregierung und möchten
-      weiterhin diejenigen schützen, die aktuell besonders gefährdet sind.
+      Da der Unterricht in unserem Yoga-Studio bis auf weiteres leider nicht möglich ist, sind wir aktuell mit einem
+      Online-Kursangebot für Euch da. Wir folgen somit den Empfehlungen unserer Bundesregierung und möchten weiterhin
+      diejenigen schützen, die aktuell besonders gefährdet sind.
       <br />
       <br />
       Dennoch möchten wir Euch dabei helfen auch zuhause eine strukturierte Übungspraxis zu etablieren und Euch
