@@ -32,7 +32,7 @@ const CheckmarkListWrapper = styled(AccentBackground)`
   height: ${({ height = '325px' }) => height};
   color: ${props => props.theme.colors.white};
   ${flexCenter()};
-  ${p(4)};
+  ${({ padding = 4 }) => p(padding)};
 `;
 
 const CheckmarkList = styled.ul`
@@ -47,9 +47,9 @@ const CheckmarkList = styled.ul`
   }
 `;
 
-export const Checkmarks = ({ height, children }) => {
+export const Checkmarks = ({ padding, height, children }) => {
   return (
-    <CheckmarkListWrapper height={height}>
+    <CheckmarkListWrapper padding={padding} height={height}>
       <CheckmarkList>{children}</CheckmarkList>
     </CheckmarkListWrapper>
   );

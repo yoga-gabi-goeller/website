@@ -74,8 +74,8 @@ export default () => (
                 </Trainer>
               );
             })}
-            <div className="d-none d-md-block col-8 mt-2">
-              <Checkmarks height="100%">
+            <div className="d-none d-md-block col-12 mt-2">
+              <Checkmarks height="280px">
                 <CheckmarkItem>Zertifiziert durch Iyengar-Yoga-Deutschland</CheckmarkItem>
                 <CheckmarkItem>Kontinuierliche Weiterbildung</CheckmarkItem>
                 <CheckmarkItem>
