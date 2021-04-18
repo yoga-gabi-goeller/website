@@ -193,7 +193,7 @@ export const PrimaryButton = styled.button`
   cursor: pointer;
 
   &:disabled {
-    opacity: 0.2;
+    border-color: ${props => props.theme.colors.border};
     cursor: initial;
   }
 

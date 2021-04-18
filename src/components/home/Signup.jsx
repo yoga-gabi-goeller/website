@@ -13,11 +13,20 @@ const Form = styled.form`
   padding: ${props => props.theme.spacing[2]};
 `;
 
-const FormFieldGroup = styled.div``;
+const FormFieldGroup = styled.div`
+  label {
+    margin-bottom: 0;
+    color: #a2a2a2;
+    font-size: 14px;
+  }
+`;
+
+const RadioButtonGroup = styled(FormFieldGroup)`
+  display: flex;
+`;
 
 const FormActions = styled(FormFieldGroup)`
   display: flex;
-  justify-content: flex-end;
   margin-top: ${props => props.theme.spacing[1]};
 `;
 
@@ -27,12 +36,58 @@ const FormField = styled.div`
   flex-direction: column;
   margin-top: ${props => props.theme.spacing[2]};
   margin-bottom: 23px;
+`;
 
-  label {
-    margin-bottom: 0;
-    color: #a2a2a2;
-    font-size: 14px;
+const RadioButtonRoot = styled.label`
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:checked + .radio__control {
+      background: radial-gradient(${props => props.theme.colors.gold} 45%, rgba(255, 0, 0, 0) 45%);
+    }
   }
+
+  display: flex;
+  align-items: center;
+
+  .radio__input {
+    display: flex;
+  }
+
+  .radio__control {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #a2a2a2;
+  }
+
+  .radio__label {
+    font-size: 16px;
+    margin-top: 4px;
+    margin-left: ${props => props.theme.spacing[2]};
+    line-height: 1;
+    color: ${props => props.theme.colors.primary} !important;
+  }
+`;
+
+const RadioButton = ({ name, label, ...props }) => {
+  return (
+    <RadioButtonRoot {...props}>
+      <span className="radio__input">
+        <Field type="radio" name={name} value={label} />
+        <span className="radio__control"></span>
+      </span>
+      <span className="radio__label">{label}</span>
+    </RadioButtonRoot>
+  );
+};
+
+const RadioGroup = styled(FormFieldGroup)`
+  display: flex;
+  flex-direction: column;
 `;
 
 const HiddenFormField = styled(FormField)`
@@ -54,6 +109,16 @@ const Input = styled(Field)`
   padding-bottom: ${props => props.theme.spacing[1]};
 `;
 
+const InfoText = styled.div`
+  font-size: ${({ size = 14 }) => size}px;
+  line-height: 1.3;
+
+  a {
+    font-weight: 500;
+    color: ${props => props.theme.colors.primary};
+  }
+`;
+
 const TextArea = styled(Field)`
   border: 2px solid #a2a2a2;
   outline: 0;
@@ -63,13 +128,24 @@ const TextArea = styled(Field)`
 `;
 
 const SignupSchema = Yup.object().shape({
-  name: Yup.string().required('Bitte geben Sie Ihren Namen ein'),
+  gender: Yup.string().required('Bitte geben Sie Ihr Geschlecht an'),
+  firstname: Yup.string().required('Bitte geben Sie Ihren Vornamen ein'),
+  lastname: Yup.string().required('Bitte geben Sie Ihren Nachnamen ein'),
   age: Yup.string()
-    .matches(/^[0-9]*$/, { message: 'Kein gültiges Alter' })
+    .matches(/^[0-9]+$/, { message: 'Kein gültiges Alter' })
     .required('Bitte geben Sie Ihr Alter ein'),
+  address: Yup.string().required('Bitte geben Sie Ihre Straße und Hausnummer ein'),
+  plz: Yup.string()
+    .matches(/^[0-9]+$/, { message: 'Keine gültige Postleitzahl' })
+    .required('Bitte geben Sie Ihre Postleitzahl ein'),
+  city: Yup.string().required('Bitte geben Sie Ihren Wohnort ein'),
+  country: Yup.string().required('Bitte geben Sie ein Land ein'),
   email: Yup.string()
     .email('Ungültige E-Mail Adresse')
     .required('Bitte geben Sie eine E-Mail Adresse ein'),
+  phone: Yup.string()
+    .matches(/^[0-9\s]+$/, { message: 'Keine gültige Telefonnummer' })
+    .required('Bitte geben Sie Ihre Telefonnummer ein'),
   message: Yup.string().required('Bitte geben Sie eine Nachricht ein')
 });
 
@@ -92,9 +168,16 @@ export default class Signup extends Component {
             <Formik
               initialValues={{
                 'form-name': 'signup',
-                name: '',
+                gender: '',
+                firstname: '',
+                lastname: '',
                 age: '',
-                email: ''
+                address: '',
+                plz: '',
+                city: '',
+                country: '',
+                email: '',
+                phone: ''
               }}
               onSubmit={values => this.submit(values)}
               validationSchema={SignupSchema}
@@ -110,11 +193,23 @@ export default class Signup extends Component {
                   <HiddenFormField>
                     <Input name="bot-field" />
                   </HiddenFormField>
-                  <FormFieldGroup className="row">
+                  <FormFieldGroup className="row mb-5">
+                    <RadioGroup className="col-sm-12 mb-4">
+                      <label className="mb-1">Geschlecht</label>
+                      <RadioButtonGroup>
+                        <RadioButton name="gender" label="Männlich" />
+                        <RadioButton className="ml-4" name="gender" label="Weiblich" />
+                      </RadioButtonGroup>
+                    </RadioGroup>
                     <FormField className="col-sm-12 col-md-6 pr-md-2">
-                      <label htmlFor="name">Name</label>
-                      <Input type="text" name="name" />
-                      <ErrorMessage name="name" component="div" />
+                      <label htmlFor="firstname">Vorname</label>
+                      <Input type="text" name="firstname" />
+                      <ErrorMessage name="firstname" component="div" />
+                    </FormField>
+                    <FormField className="col-sm-12 col-md-6 pr-md-2">
+                      <label htmlFor="lastname">Nachname</label>
+                      <Input type="text" name="lastname" />
+                      <ErrorMessage name="lastname" component="div" />
                     </FormField>
                     <FormField className="col-sm-12 col-md-6 pr-md-2">
                       <label htmlFor="age">Alter</label>
@@ -122,11 +217,38 @@ export default class Signup extends Component {
                       <ErrorMessage name="age" component="div" />
                     </FormField>
                   </FormFieldGroup>
-                  <FormFieldGroup className="row">
-                    <FormField className="col-12 pl-md-2">
+                  <FormFieldGroup className="row mb-5">
+                    <FormField className="col-sm-12">
+                      <label htmlFor="address">Straße und Hausnummer</label>
+                      <Input name="address" type="text" />
+                      <ErrorMessage name="address" component="div" />
+                    </FormField>
+                    <FormField className="col-sm-12 col-md-6">
+                      <label htmlFor="plz">PLZ</label>
+                      <Input name="plz" type="text" />
+                      <ErrorMessage name="plz" component="div" />
+                    </FormField>
+                    <FormField className="col-sm-12 col-md-6">
+                      <label htmlFor="city">Ort</label>
+                      <Input name="city" type="text" />
+                      <ErrorMessage name="city" component="div" />
+                    </FormField>
+                    <FormField className="col-sm-12 col-md-6">
+                      <label htmlFor="country">Land</label>
+                      <Input name="country" type="text" />
+                      <ErrorMessage name="country" component="div" />
+                    </FormField>
+                  </FormFieldGroup>
+                  <FormFieldGroup className="row mb-5">
+                    <FormField className="col-12">
                       <label htmlFor="email">E-Mail</label>
                       <Input name="email" type="email" />
                       <ErrorMessage name="email" component="div" />
+                    </FormField>
+                    <FormField className="col-12">
+                      <label htmlFor="phone">Telefon</label>
+                      <Input name="phone" type="email" />
+                      <ErrorMessage name="phone" component="div" />
                     </FormField>
                   </FormFieldGroup>
                   <FormFieldGroup className="row">
@@ -134,11 +256,19 @@ export default class Signup extends Component {
                       <label className="mb-2" htmlFor="message">
                         Nachricht
                       </label>
+                      <InfoText className="mb-2">
+                        Bei Teilnahme an einem Schwangerschafts-Yoga-Kurs gib uns bitte Deinen voraussichtlichen
+                        Entbindungstermin an.
+                      </InfoText>
                       <TextArea component="textarea" name="message" rows="7" />
                       <ErrorMessage name="message" component="div" />
                     </FormField>
                   </FormFieldGroup>
-                  <FormActions>
+                  <InfoText className="mt-5">
+                    Die abgesendeten Daten werden nur zum Zweck der Bearbeitung Deines Anliegens verarbeitet. Weitere
+                    Informationen findest Du in unserer <a href="/privacy">Datenschutzerklärung</a>.
+                  </InfoText>
+                  <FormActions className="mt-4">
                     <PrimaryButton disabled={isSubmitting || !isValid} type="submit">
                       Absenden
                     </PrimaryButton>
