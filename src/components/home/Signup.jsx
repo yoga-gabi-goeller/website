@@ -247,7 +247,7 @@ export default class Signup extends Component {
                     </FormField>
                     <FormField className="col-12">
                       <label htmlFor="phone">Telefon</label>
-                      <Input name="phone" type="email" />
+                      <Input name="phone" type="text" />
                       <ErrorMessage name="phone" component="div" />
                     </FormField>
                   </FormFieldGroup>
