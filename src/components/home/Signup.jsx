@@ -7,6 +7,8 @@ import styled from 'styled-components';
 import * as Yup from 'yup';
 import { PrimaryButton, SectionHeader } from '../styled/Base';
 
+const currentYear = new Date().getFullYear();
+
 const Form = styled.form`
   max-width: 650px;
   margin: auto;
@@ -95,8 +97,6 @@ const HiddenFormField = styled(FormField)`
 `;
 
 const ErrorMessage = styled(FormikErrorMessage)`
-  position: absolute;
-  bottom: -23px;
   font-size: 0.8rem;
   padding: 2px 0;
   color: ${props => props.theme.colors.error};
@@ -131,9 +131,35 @@ const SignupSchema = Yup.object().shape({
   gender: Yup.string().required('Bitte geben Sie Ihr Geschlecht an'),
   firstname: Yup.string().required('Bitte geben Sie Ihren Vornamen ein'),
   lastname: Yup.string().required('Bitte geben Sie Ihren Nachnamen ein'),
-  age: Yup.string()
-    .matches(/^[0-9]+$/, { message: 'Kein gültiges Alter' })
-    .required('Bitte geben Sie Ihr Alter ein'),
+  birthday: Yup.string()
+    .test('test-birthday', 'Bitte geben Sie Ihr Geburtsdatum in diesem Format ein: TT.MM.JJJJ', value => {
+      if (value == null) {
+        return false;
+      }
+
+      const parts = value.split('.');
+
+      if (parts.length > 3 || parts.length < 3) {
+        return false;
+      }
+
+      const [day, month, year] = parts.map(part => parseInt(part));
+
+      if (isNaN(day) || day < 1 || day > 31) {
+        return false;
+      }
+
+      if (isNaN(month) || month < 1 || month > 12) {
+        return false;
+      }
+
+      if (isNaN(year) || year <= currentYear - 120 || year > currentYear) {
+        return false;
+      }
+
+      return true;
+    })
+    .required('Bitte geben Sie Ihr Geburtsdatum ein'),
   address: Yup.string().required('Bitte geben Sie Ihre Straße und Hausnummer ein'),
   plz: Yup.string()
     .matches(/^[0-9]+$/, { message: 'Keine gültige Postleitzahl' })
@@ -171,13 +197,14 @@ export default class Signup extends Component {
                 gender: '',
                 firstname: '',
                 lastname: '',
-                age: '',
+                birthday: '',
                 address: '',
                 plz: '',
                 city: '',
                 country: '',
                 email: '',
-                phone: ''
+                phone: '',
+                message: ''
               }}
               onSubmit={values => this.submit(values)}
               validationSchema={SignupSchema}
@@ -200,6 +227,7 @@ export default class Signup extends Component {
                         <RadioButton name="gender" label="Männlich" />
                         <RadioButton className="ml-4" name="gender" label="Weiblich" />
                       </RadioButtonGroup>
+                      <ErrorMessage name="gender" component="div" />
                     </RadioGroup>
                     <FormField className="col-sm-12 col-md-6 pr-md-2">
                       <label htmlFor="firstname">Vorname</label>
@@ -212,9 +240,9 @@ export default class Signup extends Component {
                       <ErrorMessage name="lastname" component="div" />
                     </FormField>
                     <FormField className="col-sm-12 col-md-6 pr-md-2">
-                      <label htmlFor="age">Alter</label>
-                      <Input name="age" type="text" />
-                      <ErrorMessage name="age" component="div" />
+                      <label htmlFor="age">Geburtsdatum</label>
+                      <Input name="birthday" type="text" placeholder="TT.MM.JJJJ" />
+                      <ErrorMessage name="birthday" component="div" />
                     </FormField>
                   </FormFieldGroup>
                   <FormFieldGroup className="row mb-5">
@@ -269,9 +297,7 @@ export default class Signup extends Component {
                     Informationen findest Du in unserer <a href="/privacy">Datenschutzerklärung</a>.
                   </InfoText>
                   <FormActions className="mt-4">
-                    <PrimaryButton disabled={isSubmitting || !isValid} type="submit">
-                      Absenden
-                    </PrimaryButton>
+                    <PrimaryButton type="submit">Absenden</PrimaryButton>
                   </FormActions>
                 </Form>
               )}

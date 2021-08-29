@@ -29,7 +29,7 @@ export default class Imprint extends Component {
                 <br />
                 Mobil: 0 17 3 / 90 29 42 1<br />
                 <br />
-                Email: info@gabigoeller.de
+                Email: gabi@goeller.yoga
                 <br />
               </p>
               <p>

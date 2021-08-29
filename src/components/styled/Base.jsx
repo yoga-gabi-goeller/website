@@ -188,9 +188,13 @@ export const Toolbar = styled(ToolbarBase)`
 export const PrimaryButton = styled.button`
   border: 2px solid ${props => props.theme.colors.primary};
   background: transparent;
-  padding: 0.25rem 0.5rem 0.1rem 0.5rem;
+  padding: 0.5rem 1.2rem 0.35rem 1.2rem;
   font-weight: 300;
   cursor: pointer;
+
+  &:focus {
+    outline: 0;
+  }
 
   &:disabled {
     border-color: ${props => props.theme.colors.border};

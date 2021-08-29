@@ -261,9 +261,9 @@ export default class Courses extends Component {
                           <div dangerouslySetInnerHTML={{ __html: course.content }} />
                           <CourseButtonGroup>
                             <PrimaryButton className="mr-3" onClick={() => this.scrollToSection('schedule')}>
-                              ZUM STUNDENPLAN
+                              Zum Stundenplan
                             </PrimaryButton>
-                            <PrimaryButton onClick={() => this.scrollToSection('signup')}>ANMELDEN</PrimaryButton>
+                            <PrimaryButton onClick={() => this.scrollToSection('signup')}>Anmelden</PrimaryButton>
                           </CourseButtonGroup>
                         </CoursePreviewContent>
                       </CoursePreview>

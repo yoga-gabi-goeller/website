@@ -411,7 +411,7 @@ export default class Schedule extends Component {
                 </Day>
               </div>
               <ActionButtons>
-                <PrimaryButton onClick={() => this.scrollToSection('signup')}>ZUR ANMELDUNG</PrimaryButton>
+                <PrimaryButton onClick={() => this.scrollToSection('signup')}>Zur Anmeldung</PrimaryButton>
               </ActionButtons>
             </Container>
           );

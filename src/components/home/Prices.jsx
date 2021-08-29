@@ -75,7 +75,7 @@ export default () => (
             {prices.map((card, cardIndex) => {
               const isLast = cardIndex === prices.length - 1;
               return (
-                <div key={cardIndex} className={`col-md-4 mt-1 ${!isLast ? 'mt-md-0' : 'mt-md-2'}`}>
+                <div key={cardIndex} className="col-md-4 mt-1">
                   <PriceContainer>
                     <PriceCard color={card.color}>
                       <PriceCardHeader>{card.name}</PriceCardHeader>
@@ -86,7 +86,7 @@ export default () => (
                 </div>
               );
             })}
-            <div className="col-md-8 mt-1 mt-md-2">
+            <div className="col-md-12 mt-1 mt-md-2">
               <Checkmarks>
                 <CheckmarkItem>90 min pro Unterrichtseinheit</CheckmarkItem>
                 <CheckmarkItem>Schülerermäßigung 50%</CheckmarkItem>
