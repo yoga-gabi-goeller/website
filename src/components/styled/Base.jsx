@@ -58,14 +58,19 @@ export const Checkmarks = ({ padding, height, children }) => {
 const CheckmarkListItemBase = styled.li`
   display: flex;
   align-items: baseline;
-  lineheight: 1.8em;
-  fontweight: 300;
+  line-height: 1.2em;
+  font-weight: 300;
+  max-width: ${({ maxWidth = '100%' }) => maxWidth};
+
+  &:not(:last-child) {
+    margin-bottom: 16px;
+  }
 `;
 
 export class CheckmarkItem extends Component {
   render() {
     return (
-      <CheckmarkListItemBase>
+      <CheckmarkListItemBase maxWidth={this.props.maxWidth}>
         <div>
           <FontAwesomeIcon className="mr-3" icon="check" size="sm" />
         </div>

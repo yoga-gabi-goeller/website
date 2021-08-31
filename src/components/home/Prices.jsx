@@ -52,7 +52,7 @@ const Price = styled.div`
 export default () => (
   <StaticQuery
     query={graphql`
-      query Prices {
+      query Data {
         allContentfulCard(sort: { fields: [position], order: ASC }) {
           edges {
             node {
@@ -63,10 +63,18 @@ export default () => (
             }
           }
         }
+        allContentfulPriceCheckmark {
+          edges {
+            node {
+              text
+            }
+          }
+        }
       }
     `}
-    render={({ allContentfulCard }) => {
+    render={({ allContentfulCard, allContentfulPriceCheckmark }) => {
       const prices = extractNodes(allContentfulCard);
+      const checkmarks = extractNodes(allContentfulPriceCheckmark);
 
       return (
         <div id="prices" className="container-fluid">
@@ -87,13 +95,10 @@ export default () => (
               );
             })}
             <div className="col-md-12 mt-1 mt-md-2">
-              <Checkmarks>
-                <CheckmarkItem>90 min pro Unterrichtseinheit</CheckmarkItem>
-                <CheckmarkItem>Schülerermäßigung 50%</CheckmarkItem>
-                <CheckmarkItem>Einzelunterricht auf Anfrage</CheckmarkItem>
-                <CheckmarkItem>Individueller Stundenplan</CheckmarkItem>
-                <CheckmarkItem>Krankenkassen anerkannt</CheckmarkItem>
-                <CheckmarkItem>Probestunde jederzeit möglich</CheckmarkItem>
+              <Checkmarks padding={6} height="initial">
+                {checkmarks.map(({ text }, index) => (
+                  <CheckmarkItem key={index} maxWidth="600px">{text}</CheckmarkItem>
+                ))}
               </Checkmarks>
             </div>
           </div>
