@@ -96,6 +96,9 @@ export default class Footer extends Component {
               </CompanyInformationContainer>
             </Margin>
             <Imprint horizontalAlign="flex-end">
+              <Link to="/agb">
+                <PrimaryButtonInvert>AGB</PrimaryButtonInvert>
+              </Link>
               <Link to="/privacy">
                 <PrimaryButtonInvert>Datenschutz</PrimaryButtonInvert>
               </Link>

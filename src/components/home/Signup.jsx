@@ -87,6 +87,72 @@ const RadioButton = ({ name, label, ...props }) => {
   );
 };
 
+const CheckboxRoot = styled.div`
+  label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    color: ${props => props.theme.colors.primary};
+  }
+
+  .checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #a2a2a2;
+    border-radius: 4px;
+    margin-right: ${props => props.theme.spacing[2]};
+
+    &:after {
+      content: '';
+      position: absolute;
+      display: none;
+      left: 11px;
+      top: 6px;
+      width: 6px;
+      height: 9px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+  }
+
+  a {
+    font-weight: 500;
+    text-decoration: underline;
+    color: ${props => props.theme.colors.primary};
+  }
+
+  .children {
+    margin-top: 3px;
+  }
+
+  input {
+    display: none;
+  }
+
+  input:checked ~ .checkbox:after {
+    display: block;
+  }
+
+  input:checked ~ .checkbox {
+    background: ${props => props.theme.colors.gold};
+    border-color: ${props => props.theme.colors.gold};
+  }
+`;
+
+const Checkbox = ({ name, children }) => {
+  return (
+    <CheckboxRoot>
+      <label htmlFor={name}>
+        <Field type="checkbox" id={name} name={name} />
+        <div className="checkbox"></div>
+        <div className="children">{children}</div>
+      </label>
+    </CheckboxRoot>
+  );
+};
+
 const RadioGroup = styled(FormFieldGroup)`
   display: flex;
   flex-direction: column;
@@ -115,6 +181,7 @@ const InfoText = styled.div`
 
   a {
     font-weight: 500;
+    text-decoration: underline;
     color: ${props => props.theme.colors.primary};
   }
 `;
@@ -172,7 +239,10 @@ const SignupSchema = Yup.object().shape({
   phone: Yup.string()
     .matches(/^[0-9\s]+$/, { message: 'Keine gültige Telefonnummer' })
     .required('Bitte geben Sie Ihre Telefonnummer ein'),
-  message: Yup.string().required('Bitte geben Sie eine Nachricht ein')
+  message: Yup.string().required('Bitte geben Sie eine Nachricht ein'),
+  agb: Yup.boolean()
+    .required('Bitte bestätigen Sie die AGB')
+    .oneOf([true], 'Bitte bestätigen Sie die AGB')
 });
 
 export default class Signup extends Component {
@@ -204,7 +274,8 @@ export default class Signup extends Component {
                 country: '',
                 email: '',
                 phone: '',
-                message: ''
+                message: '',
+                agb: false
               }}
               onSubmit={values => this.submit(values)}
               validationSchema={SignupSchema}
@@ -296,6 +367,16 @@ export default class Signup extends Component {
                     Die abgesendeten Daten werden nur zum Zweck der Bearbeitung Deines Anliegens verarbeitet. Weitere
                     Informationen findest Du in unserer <a href="/privacy">Datenschutzerklärung</a>.
                   </InfoText>
+                  <FormFieldGroup className="row">
+                    <FormField className="col-12">
+                      <Checkbox name="agb">
+                        Ich habe die&nbsp;
+                        <a href="/agb">AGB</a>
+                        &nbsp;gelesen und akzeptiere diese.
+                      </Checkbox>
+                      <ErrorMessage name="agb" component="div" />
+                    </FormField>
+                  </FormFieldGroup>
                   <FormActions className="mt-4">
                     <PrimaryButton type="submit">Absenden</PrimaryButton>
                   </FormActions>
