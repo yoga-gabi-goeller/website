@@ -66,8 +66,8 @@ const CourseContent = styled.div`
     ${p(2)};
   }
 
-  ${({ online }) => {
-    if (!online) {
+  ${({ showBadge }) => {
+    if (!showBadge) {
       return `
         ${breakpoint('md-up')} {
           padding-top: 10px;
@@ -125,8 +125,6 @@ const CourseTrainer = styled.span`
 const CourseTime = styled(CourseTrainer)``;
 
 const Badge = styled.div`
-  background: ${props => props.theme.colors.accent};
-  color: ${props => props.theme.colors.white};
   border-radius: 4px 4px 0 0;
   text-transform: uppercase;
   width: 100%;
@@ -134,6 +132,16 @@ const Badge = styled.div`
   text-align: center;
   font-size: 12px;
   line-height: 1;
+
+  &.hybrid {
+    background: ${props => props.theme.colors.accent};
+    color: ${props => props.theme.colors.white};
+  }
+
+  &.online {
+    background: ${props => props.theme.colors.accent};
+    color: ${props => props.theme.colors.white};
+  }
 `;
 
 const Closed = styled.h5`
@@ -145,6 +153,18 @@ const Closed = styled.h5`
 
 const ContentColumn = ({ className, day }) => {
   const courses = day.courses;
+
+  const getBadgeClasses = course => {
+    if (course.hybrid) {
+      return 'hybrid';
+    }
+
+    if (course.online) {
+      return 'online';
+    }
+
+    return '';
+  };
 
   return (
     <div className={className} name="schedule">
@@ -167,14 +187,16 @@ const ContentColumn = ({ className, day }) => {
         })
         .map((course, courseIndex) => {
           if (course) {
-            const { time, online, closed } = course;
+            const { time, online, hybrid, closed } = course;
             const classes = closed ? 'closed' : '';
 
             return (
               <Cell key={courseIndex}>
                 <Course className={classes} online={online}>
-                  {online ? <Badge>online</Badge> : null}
-                  <CourseContent online={online}>
+                  {online || hybrid ? (
+                    <Badge className={getBadgeClasses(course)}>{hybrid ? 'hybrid' : 'online'}</Badge>
+                  ) : null}
+                  <CourseContent showBadge={online || hybrid}>
                     <CourseTime className="mb-1">{time}</CourseTime>
                     <CourseTitle className={classes}>{course.title}</CourseTitle>
                     {closed ? (
@@ -234,7 +256,11 @@ const Filters = styled.ul`
 
 const filterDay = (day, filter) => {
   const filteredCourses = day.courses.map(course => {
-    return course && (filter === 'Alle' || course.title === filter || (filter === 'Online' && course.online))
+    return course &&
+      (filter === 'Alle' ||
+        course.title === filter ||
+        (filter === 'Online' && course.online) ||
+        (filter === 'Hybrid' && course.hybrid))
       ? course
       : null;
   });
@@ -296,6 +322,7 @@ export default class Schedule extends Component {
                   }
                   time
                   online
+                  hybrid
                   closed
                 }
               }
@@ -305,7 +332,7 @@ export default class Schedule extends Component {
         render={({ allContentfulCourseEntry, allContentfulCourse }) => {
           const filters = ['Alle'].concat(
             extractNodes(allContentfulCourse).map(course => course.title),
-            ['Online']
+            ['Online', 'Hybrid']
           );
 
           const { selectedFilter } = this.state;
@@ -315,13 +342,14 @@ export default class Schedule extends Component {
 
           extractNodes(allContentfulCourseEntry).forEach(entry => {
             const day = entry.day.name;
-            const { course, trainers, time, online, closed } = entry;
+            const { course, trainers, time, online, hybrid, closed } = entry;
 
             schedule[day].courses.push({
               title: course.title,
               trainers: trainers.map(trainer => trainer.firstname),
               time,
               online,
+              hybrid,
               closed
             });
           });
