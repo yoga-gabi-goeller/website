@@ -270,7 +270,7 @@ export default class Courses extends Component {
                     ) : null}
                   </Course>
                 ))}
-                <div className="col-sm-12 mt-1 col-md-4 d-none d-md-block">
+                <div className="col-sm-12 mt-2 d-none d-md-block">
                   <PlaceholderWrapper direction="column-reverse">
                     <Placeholder>
                       <Quote>
