@@ -175,7 +175,6 @@ export default class HomePage extends Component {
               ))}
             </MenuItemList>
           </Menu>
-          <Corona />
           <News />
           <Team />
           <Iyengar />
