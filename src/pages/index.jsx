@@ -5,7 +5,6 @@ import { Link } from 'react-scroll';
 
 import PageLayout from '../components/PageLayout';
 import Header from '../components/home/Header';
-import Corona from '../components/home/Corona';
 import News from '../components/home/News';
 import Team from '../components/home/Team';
 import Iyengar from '../components/home/Iyengar';
