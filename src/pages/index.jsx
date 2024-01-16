@@ -1,26 +1,27 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import Helmet from 'react-helmet';
 import { Link } from 'react-scroll';
+import styled from 'styled-components';
 
 import PageLayout from '../components/PageLayout';
-import Header from '../components/home/Header';
-import News from '../components/home/News';
-import Team from '../components/home/Team';
-import Iyengar from '../components/home/Iyengar';
 import Courses from '../components/home/Courses';
-import Schedule from '../components/home/Schedule';
-import Prices from '../components/home/Prices';
-import Gallery from '../components/home/Gallery';
-import Signup from '../components/home/Signup';
-import Footer from '../components/home/Footer';
 import Downloads from '../components/home/Downloads';
+import Footer from '../components/home/Footer';
+import Gallery from '../components/home/Gallery';
+import Header from '../components/home/Header';
 import ImageSection from '../components/home/ImageSection';
+import Iyengar from '../components/home/Iyengar';
+import News from '../components/home/News';
+import Prices from '../components/home/Prices';
+import ExtraInfo from '../components/home/ExtraInfo';
+import Schedule from '../components/home/Schedule';
+import Signup from '../components/home/Signup';
+import Team from '../components/home/Team';
 
-import { ContentContainer, FixedContainer } from '../components/styled/Layout';
-import { MenuButton, Toolbar } from '../components/styled/Base';
-import { flexCenter, breakpoint } from '../components/styled/Mixins';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { MenuButton, Toolbar } from '../components/styled/Base';
+import { ContentContainer, FixedContainer } from '../components/styled/Layout';
+import { breakpoint, flexCenter } from '../components/styled/Mixins';
 
 const MenuButtonContainer = styled(FixedContainer)`
   display: flex;
@@ -175,6 +176,7 @@ export default class HomePage extends Component {
             </MenuItemList>
           </Menu>
           <News />
+          <ExtraInfo />
           <Team />
           <Iyengar />
           <Courses />
