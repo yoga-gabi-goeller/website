@@ -9,6 +9,7 @@ import { p, mt } from 'styled-components-spacing';
 
 const TrainerDescription = styled.div`
   ${p(3)};
+  flex: 1;
   background: #f6f5f2;
 `;
 
@@ -23,6 +24,9 @@ const TrainerStatus = styled(TrainerName.withComponent('h4'))`
 `;
 
 const Trainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
   ${breakpoint('md-up')} {
     ${mt(2)};
   }
